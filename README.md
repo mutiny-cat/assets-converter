@@ -65,7 +65,7 @@ macOS, Linux, Windows.
 
 ### Imatges → WebP
 
-Converteix imatges JPEG i PNG al format **WebP**, que redueix la mida dels arxius entre un 25 % i un 35 % sense pèrdua de qualitat visible. És el format recomanat per a la web perquè millora el temps de càrrega de les pàgines.
+Converteix imatges JPEG i PNG al format **WebP**, que redueix considerablement la mida dels arxius sense pèrdua de qualitat visible. És el format recomanat per a la web perquè millora el temps de càrrega de les pàgines. La compressió depèn del contingut de cada imatge: fotografies, logotips i gràfics obtenen resultats diferents.
 
 Paràmetres: qualitat (0-100), velocitat (0-6) i mode sense pèrdua.
 
@@ -82,3 +82,9 @@ Converteix fonts **TTF**, **OTF** i **WOFF** al format **WOFF2**, el format de f
 ## Comportament de sobreescriptura
 
 Si no se sobreescriu i l'arxiu de sortida ja existeix, s'afegeix un sufix `_001`, `_002`...
+
+## Pla futur
+
+- Suport per a **AVIF** (v2.0)
+- Subset de fonts (caràcters seleccionats)
+- Optimització de PNG i JPEG addicional
