@@ -207,7 +207,7 @@ async function doScan() {
     const data = await res.json()
     if (data.error) { toast(data.error, "error"); return }
     scannedFiles = data.arxius
-    showToast(data.missatge, data.total > 0 ? "success" : "error")
+    toast(data.missatge, data.total > 0 ? "success" : "error")
     if (data.total > 0) {
       if (activeTool === "imatges") showGallery(data.arxius)
       else showFileList(data.arxius)
