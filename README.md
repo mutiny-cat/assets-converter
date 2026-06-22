@@ -21,7 +21,7 @@ pnpm dev
 
 Obre http://localhost:9999 al navegador.
 
-El mode `dev` engega ràpid i recarrega automàticament en modificar el codi. És l'indicat per a ús local diari.
+El mode `dev` s'executa ràpid i es recarrega automàticament en modificar el codi. És l'indicat per a ús local diari.
 
 Per a un entorn de producció (sense recàrrega automàtica, més ràpid en execució):
 
@@ -32,7 +32,7 @@ node dist/server/entry.mjs
 
 ## Accés directe a l'escriptori (macOS)
 
-Hi ha un `.app` a l'escriptori (`Assets Converter.app`). Fes-hi doble clic per engegar el servidor i obrir el navegador automàticament.
+Hi ha un `.app` a l'escriptori (`Assets Converter.app`). Fes-hi doble clic per executar el servidor i obrir el navegador automàticament.
 
 ## Eines
 
