@@ -98,3 +98,9 @@ Una font tipogràfica completa (700 caràcters) pot ocupar 200 KB. Si només nec
 ### Optimització de PNG i JPEG addicional
 
 De vegades cal optimitzar els PNG i JPEG originals sense canviar de format. Per exemple: reduir la paleta de colors d'un PNG amb compressió amb pèrdua, o recomprimir un JPEG amb paràmetres més eficients. `sharp` cobreix part d'aquestes necessitats, però eines especialitzades com `pngquant` o `mozjpeg` poden aconseguir millors resultats en casos concrets.
+
+---
+
+## Agraïments
+
+A [STUCOM](https://www.stucom.com) i a la [FIB — Facultat d'Informàtica de Barcelona](https://www.fib.upc.edu) per formar la comunitat dev catalana.
