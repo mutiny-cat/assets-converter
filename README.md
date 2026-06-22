@@ -38,6 +38,18 @@ node dist/server/entry.mjs
 | Vectors | Optimitza SVG | `.svg` | `.svg` |
 | Fonts | Converteix a WOFF2 | `.ttf` `.otf` `.woff` | `.woff2` |
 
+## Tecnologies
+
+| Capa | Tecnologia |
+|---|---|
+| Servidor | [Astro](https://astro.build) + adaptador Node.js |
+| Bundler | [Vite](https://vite.dev) (integrat a Astro) |
+| Gestor de paquets | [pnpm](https://pnpm.io) |
+| Llenguatge | TypeScript |
+| UI | HTML + CSS + JavaScript (sense framework) |
+| Progrés en temps real | SSE (Server-Sent Events) |
+
+
 ## Dependències
 
 | Paquet | Ús |
