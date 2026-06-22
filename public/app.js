@@ -84,6 +84,7 @@ function crearNodeArbre(data, treeEl, esSortida, indent) {
       const name = document.createElement("span")
       name.className = "tree-name dir-name"
       name.textContent = entry.nom
+      name.title = entry.ruta
       node.appendChild(name)
 
       node.addEventListener("click", (e) => {
@@ -126,7 +127,7 @@ async function toggleNode(treeEl, nodeEl, ruta, esSortida) {
     try {
       if (!children.hasChildNodes()) {
         const data = await fetchDir(ruta, esSortida)
-        const depth = parseInt(nodeEl.dataset.depth || "0") + 16
+        const depth = parseInt(nodeEl.dataset.depth || "0") + 20
         const newKids = crearNodeArbre(data, treeEl, esSortida, depth)
         while (newKids.firstChild) {
           newKids.firstChild.dataset.depth = depth
@@ -177,6 +178,7 @@ function crearNodeArrel(emoji, label, ruta, treeEl, esSortida, parent) {
   const name = document.createElement("span")
   name.className = "tree-name dir-name"
   name.textContent = label
+  name.title = ruta
   node.appendChild(name)
 
   node.addEventListener("click", (e) => {
