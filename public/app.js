@@ -207,9 +207,11 @@ async function doScan() {
     const data = await res.json()
     if (data.error) { toast(data.error, "error"); return }
     scannedFiles = data.arxius
-    toast(data.missatge, data.total > 0 ? "success" : "error")
-    if (activeTool === "imatges") showGallery(data.arxius)
-    else showFileList(data.arxius)
+    showToast(data.missatge, data.total > 0 ? "success" : "error")
+    if (data.total > 0) {
+      if (activeTool === "imatges") showGallery(data.arxius)
+      else showFileList(data.arxius)
+    }
     convertBtn.disabled = data.total === 0
   } catch { toast("Error d'escaneig", "error") }
 }
