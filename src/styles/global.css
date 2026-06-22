@@ -27,6 +27,7 @@ h1{font-size:1.4rem;color:var(--accent2);margin-bottom:.15rem}
 .config-row .value{font-family:var(--font);font-size:.78rem;color:var(--accent);min-width:28px;text-align:right}
 .config-check{display:flex;align-items:center;gap:.4rem;font-size:.82rem;cursor:pointer}
 .config-check input[type=checkbox]{width:15px;height:15px;accent-color:var(--accent)}
+input[type=range]:disabled{opacity:.35;cursor:not-allowed}
 
 /* Layout a dues columnes */
 .browser-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.75rem}

@@ -19,6 +19,16 @@ qualityRange.oninput = () => { qualityValue.textContent = qualityRange.value }
 speedRange.oninput = () => { speedValue.textContent = speedRange.value }
 precisionRange.oninput = () => { precisionValue.textContent = precisionRange.value }
 
+// "Sense pèrdua" deshabilita qualitat i velocitat
+const losslessCheck = $("losslessCheck")
+losslessCheck.addEventListener("change", () => {
+  const dis = losslessCheck.checked
+  qualityRange.disabled = dis
+  speedRange.disabled = dis
+  qualityValue.style.opacity = dis ? ".4" : "1"
+  speedValue.style.opacity = dis ? ".4" : "1"
+})
+
 toolTabs.addEventListener("click", (e) => {
   const tab = e.target.closest(".tool-tab")
   if (!tab) return
