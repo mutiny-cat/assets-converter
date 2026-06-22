@@ -1,0 +1,89 @@
+---
+import os from "node:os"
+import "../styles/global.css"
+
+const HOME = os.homedir()
+---
+
+<!doctype html>
+<html lang="ca" data-home={HOME}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Assets Converter</title>
+</head>
+<body>
+  <main class="main">
+    <h1>Assets Converter</h1>
+    <p class="subtitle">Convertidor d'actius local: imatges a WebP, optimització SVG i fonts a WOFF2</p>
+
+    <div class="tool-tabs" id="toolTabs">
+      <button class="tool-tab active" data-tool="imatges">Imatges → WebP</button>
+      <button class="tool-tab" data-tool="vectors">Vectors SVG</button>
+      <button class="tool-tab" data-tool="fonts">Fonts → WOFF2</button>
+    </div>
+
+    <div class="config-panel">
+      <div id="configImatges">
+        <div class="config-row">
+          <label>Qualitat</label>
+          <input type="range" id="qualityRange" min="0" max="100" value="80" />
+          <span class="value" id="qualityValue">80</span>
+        </div>
+        <div class="config-row">
+          <label>Velocitat</label>
+          <input type="range" id="speedRange" min="0" max="6" value="4" />
+          <span class="value" id="speedValue">4</span>
+        </div>
+        <label class="config-check">
+          <input type="checkbox" id="losslessCheck" /> Sense pèrdua
+        </label>
+      </div>
+      <div id="configVectors" class="hidden">
+        <div class="config-row">
+          <label>Precisió</label>
+          <input type="range" id="precisionRange" min="0" max="10" value="3" />
+          <span class="value" id="precisionValue">3</span>
+        </div>
+      </div>
+      <div id="configFonts" class="hidden">
+        <p style="color:var(--text2);font-size:.8rem">Converteix .ttf, .otf i .woff a WOFF2</p>
+      </div>
+    </div>
+
+    <label class="section-label">Directori d'origen</label>
+    <div class="browser">
+      <div class="browser-tree" id="treeOrigen"></div>
+      <div class="browser-footer">
+        <span class="browser-path" id="pathOrigen">—</span>
+        <button class="btn-primary" id="scanBtn" type="button" disabled>Analitzar</button>
+      </div>
+    </div>
+
+    <label class="config-check" style="margin-bottom:.75rem">
+      <input type="checkbox" id="recursiveCheck" /> Cerca recursiva
+    </label>
+
+    <label class="section-label">Directori de sortida</label>
+    <div class="browser">
+      <div class="browser-tree" id="treeSortida"></div>
+      <div class="browser-footer">
+        <span class="browser-path" id="pathSortida">—</span>
+      </div>
+    </div>
+
+    <label class="config-check" style="margin-top:.75rem;margin-bottom:1rem">
+      <input type="checkbox" id="overwriteCheck" />
+      Sobreescriure arxius existents (si no, s'afegeix sufix _001, _002...)
+    </label>
+
+    <div class="gallery" id="gallery"></div>
+    <div class="file-list hidden" id="fileList"></div>
+    <div class="status-log hidden" id="statusLog"></div>
+
+    <button class="btn-primary btn-big" id="convertBtn" type="button" disabled>Convertir</button>
+  </main>
+
+  <script is:inline src="/app.js"></script>
+</body>
+</html>
