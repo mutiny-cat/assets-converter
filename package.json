@@ -2,6 +2,7 @@
   "name": "assets-converter",
   "version": "1.0.0",
   "description": "Convertidor d'actius local: imatges a WebP, optimització SVG i fonts a WOFF2",
+  "license": "CC0-1.0",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
