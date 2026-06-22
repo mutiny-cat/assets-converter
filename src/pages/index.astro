@@ -23,6 +23,7 @@ const HOME = os.homedir()
 <body>
   <main class="main">
     <h1>Assets Converter</h1>
+    <button class="btn-shutdown" id="shutdownBtn" type="button" title="Aturar el servidor">⏻</button>
     <p class="subtitle">Convertidor d'actius local: imatges a WebP, optimització SVG i fonts a WOFF2</p>
 
     <div class="tool-tabs" id="toolTabs">
@@ -86,8 +87,6 @@ const HOME = os.homedir()
     <div class="gallery" id="gallery"></div>
     <div class="file-list hidden" id="fileList"></div>
     <div class="status-log hidden" id="statusLog"></div>
-
-    <button class="btn-small" id="shutdownBtn" type="button" title="Aturar el servidor">⏻ Aturar servidor</button>
   </main>
 
   <script is:inline src="/app.js"></script>

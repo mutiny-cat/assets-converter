@@ -290,9 +290,8 @@ HOME = document.documentElement.dataset.home || "/Users"
 initTree(treeOrigen, false)
 initTree(treeSortida, true)
 
-// Botó tancar servidor
+// Botó tancar servidor (dalt a la dreta)
 $("shutdownBtn").addEventListener("click", async () => {
   if (!confirm("Segur que vols aturar el servidor?")) return
   try { await fetch("/api/shutdown", { method: "POST" }) } catch {}
-  document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:var(--text2);font-family:system-ui;font-size:1.2rem">Servidor aturat. Pots tancar aquesta pestanya.</div>'
 })
