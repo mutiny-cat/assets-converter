@@ -1,39 +1,24 @@
 // Estat global
-let activeTool = "imatges"
-let scannedFiles = []
-let dirOrigen = ""
-let dirSortida = ""
+let activeTool = "imatges", scannedFiles = [], dirOrigen = "", dirSortida = ""
 const cache = {}
 let HOME = ""
 
-// DOM refs
+// DOM
 const $ = (id) => document.getElementById(id)
 const toolTabs = $("toolTabs")
-const configImatges = $("configImatges")
-const configVectors = $("configVectors")
-const configFonts = $("configFonts")
-const qualityRange = $("qualityRange")
-const qualityValue = $("qualityValue")
-const speedRange = $("speedRange")
-const speedValue = $("speedValue")
-const precisionRange = $("precisionRange")
-const precisionValue = $("precisionValue")
-const treeOrigen = $("treeOrigen")
-const treeSortida = $("treeSortida")
-const pathOrigen = $("pathOrigen")
-const pathSortida = $("pathSortida")
-const scanBtn = $("scanBtn")
-const convertBtn = $("convertBtn")
-const gallery = $("gallery")
-const fileList = $("fileList")
-const statusLog = $("statusLog")
+const configImatges = $("configImatges"), configVectors = $("configVectors"), configFonts = $("configFonts")
+const qualityRange = $("qualityRange"), qualityValue = $("qualityValue")
+const speedRange = $("speedRange"), speedValue = $("speedValue")
+const precisionRange = $("precisionRange"), precisionValue = $("precisionValue")
+const treeOrigen = $("treeOrigen"), treeSortida = $("treeSortida")
+const pathOrigen = $("pathOrigen"), pathSortida = $("pathSortida")
+const scanBtn = $("scanBtn"), convertBtn = $("convertBtn")
+const gallery = $("gallery"), fileList = $("fileList"), statusLog = $("statusLog")
 
-// Sliders
-qualityRange.addEventListener("input", () => { qualityValue.textContent = qualityRange.value })
-speedRange.addEventListener("input", () => { speedValue.textContent = speedRange.value })
-precisionRange.addEventListener("input", () => { precisionValue.textContent = precisionRange.value })
+qualityRange.oninput = () => { qualityValue.textContent = qualityRange.value }
+speedRange.oninput = () => { speedValue.textContent = speedRange.value }
+precisionRange.oninput = () => { precisionValue.textContent = precisionRange.value }
 
-// Selector d'eina
 toolTabs.addEventListener("click", (e) => {
   const tab = e.target.closest(".tool-tab")
   if (!tab) return
@@ -59,199 +44,154 @@ async function fetchDir(dir, esSortida) {
   return data
 }
 
-function crearNodeArbre(data, treeEl, esSortida, indent) {
-  const container = document.createElement("div")
-  container.className = "tree-children"
-  container.style.paddingLeft = indent + "px"
+function tr(dir, name, isDir, rootLabel) {
+  const row = document.createElement("div")
+  row.className = "tr"
+  row.dataset.path = dir
+  row.dataset.isdir = isDir ? "1" : "0"
 
-  for (const entry of data.entries) {
-    const node = document.createElement("div")
-    node.className = "tree-node"
-    node.dataset.ruta = entry.ruta
+  // Fletxa
+  const arr = document.createElement("span")
+  arr.className = isDir ? "tr-arr" : "tr-arr hidden"
+  arr.textContent = "▶"
+  row.appendChild(arr)
 
-    if (entry.esDirectori) {
-      const toggle = document.createElement("span")
-      toggle.className = "tree-toggle"
-      toggle.textContent = "▸"
-      toggle.addEventListener("click", (e) => { e.stopPropagation(); toggleNode(treeEl, node, entry.ruta, esSortida) })
-      node.appendChild(toggle)
+  // Icona
+  const icon = document.createElement("span")
+  icon.className = "tr-icon"
+  icon.textContent = isDir ? (rootLabel ? "🏠" : "📁") : "📄"
+  row.appendChild(icon)
 
-      const icon = document.createElement("span")
-      icon.className = "tree-icon"
-      icon.textContent = "📁"
-      node.appendChild(icon)
+  // Nom
+  const nm = document.createElement("span")
+  nm.className = isDir ? "tr-name dir" : "tr-name file"
+  nm.textContent = rootLabel || name
+  nm.title = dir
+  row.appendChild(nm)
 
-      const name = document.createElement("span")
-      name.className = "tree-name dir-name"
-      name.textContent = entry.nom
-      name.title = entry.ruta
-      node.appendChild(name)
-
-      node.addEventListener("click", (e) => {
-        if (e.target.closest(".tree-toggle")) return
-        seleccionarDirectori(entry.ruta, esSortida, node)
-      })
-
-      const children = document.createElement("div")
-      children.className = "tree-children"
-      children.style.display = "none"
-      node.appendChild(children)
-    } else {
-      const spacer = document.createElement("span")
-      spacer.className = "tree-toggle"
-      spacer.style.visibility = "hidden"
-      node.appendChild(spacer)
-
-      const icon = document.createElement("span")
-      icon.className = "tree-icon"
-      icon.textContent = "📄"
-      node.appendChild(icon)
-
-      const name = document.createElement("span")
-      name.className = "tree-name file-name"
-      name.textContent = entry.nom
-      node.appendChild(name)
-    }
-
-    container.appendChild(node)
-  }
-  return container
+  return row
 }
 
-async function toggleNode(treeEl, nodeEl, ruta, esSortida) {
-  const toggle = nodeEl.querySelector(":scope > .tree-toggle")
-  const children = nodeEl.querySelector(":scope > .tree-children")
-  if (!toggle || !children) return
+function kids() {
+  const el = document.createElement("div")
+  el.className = "tr-kids"
+  el.style.display = "none"
+  return el
+}
+
+async function toggle(treeEl, row, path, esSortida, children) {
+  const arr = row.querySelector(":scope > .tr-arr")
+  if (!arr || arr.classList.contains("hidden")) return
 
   if (children.style.display === "none") {
     try {
       if (!children.hasChildNodes()) {
-        const data = await fetchDir(ruta, esSortida)
-        const depth = parseInt(nodeEl.dataset.depth || "0") + 20
-        const newKids = crearNodeArbre(data, treeEl, esSortida, depth)
-        while (newKids.firstChild) {
-          newKids.firstChild.dataset.depth = depth
-          children.appendChild(newKids.firstChild)
+        const data = await fetchDir(path, esSortida)
+        const depth = parseInt(row.dataset.depth || "0") + 1
+        for (const e of data.entries) {
+          const r = tr(e.ruta, e.nom, e.esDirectori, null)
+          const k = e.esDirectori ? kids() : null
+          r.addEventListener("click", (ev) => onRowClick(treeEl, ev, r, e.ruta, e.esDirectori, esSortida, k))
+          r.style.paddingLeft = (8 + depth * 20) + "px"
+          r.dataset.depth = depth
+          children.appendChild(r)
+          if (k) children.appendChild(k)
         }
       }
       children.style.display = ""
-      toggle.textContent = "▾"
-    } catch { showToast("Error en carregar", "error") }
+      arr.classList.add("open")
+    } catch { toast("Error en carregar", "error") }
   } else {
     children.style.display = "none"
-    toggle.textContent = "▸"
+    arr.classList.remove("open")
   }
 }
 
-function seleccionarDirectori(ruta, esSortida, nodeEl) {
-  const tree = esSortida ? treeSortida : treeOrigen
-  tree.querySelectorAll(".tree-node.selected").forEach((n) => n.classList.remove("selected"))
-  nodeEl.classList.add("selected")
+function onRowClick(treeEl, ev, row, path, isDir, esSortida, children) {
+  // Clic a la fletxa = només expandir, no seleccionar
+  if (ev.target.closest(".tr-arr")) {
+    if (children) toggle(treeEl, row, path, esSortida, children)
+    return
+  }
+  // Clic al nom = seleccionar
+  treeEl.querySelectorAll(".tr.sel").forEach((r) => r.classList.remove("sel"))
+  row.classList.add("sel")
 
   if (esSortida) {
-    dirSortida = ruta
-    pathSortida.textContent = ruta
+    dirSortida = path
+    pathSortida.textContent = path
   } else {
-    dirOrigen = ruta
-    pathOrigen.textContent = ruta
+    dirOrigen = path
+    pathOrigen.textContent = path
     scanBtn.disabled = false
   }
-}
-
-function crearNodeArrel(emoji, label, ruta, treeEl, esSortida, parent) {
-  const node = document.createElement("div")
-  node.className = "tree-node"
-  node.dataset.ruta = ruta
-  node.dataset.depth = "0"
-
-  const toggle = document.createElement("span")
-  toggle.className = "tree-toggle"
-  toggle.textContent = "▸"
-  toggle.addEventListener("click", (e) => { e.stopPropagation(); toggleNode(treeEl, node, ruta, esSortida) })
-  node.appendChild(toggle)
-
-  const icon = document.createElement("span")
-  icon.className = "tree-icon"
-  icon.textContent = emoji
-  node.appendChild(icon)
-
-  const name = document.createElement("span")
-  name.className = "tree-name dir-name"
-  name.textContent = label
-  name.title = ruta
-  node.appendChild(name)
-
-  node.addEventListener("click", (e) => {
-    if (e.target.closest(".tree-toggle")) return
-    seleccionarDirectori(ruta, esSortida, node)
-  })
-
-  const children = document.createElement("div")
-  children.className = "tree-children"
-  children.style.display = "none"
-  node.appendChild(children)
-
-  parent.appendChild(node)
-  return node
+  // Si és directori, també expandir
+  if (isDir && children) toggle(treeEl, row, path, esSortida, children)
 }
 
 async function initTree(treeEl, esSortida) {
   try {
-    const root = document.createElement("div")
-    root.className = "tree-children"
+    treeEl.innerHTML = ""
 
-    // Node Documents
-    crearNodeArrel("🏠", "Documents", HOME + "/Documents", treeEl, esSortida, root)
+    // Documents
+    const docPath = HOME + "/Documents"
+    const docRow = tr(docPath, "Documents", true, "Documents")
+    const docKids = kids()
+    docRow.addEventListener("click", (ev) => onRowClick(treeEl, ev, docRow, docPath, true, esSortida, docKids))
+    docRow.style.paddingLeft = "8px"
+    docRow.dataset.depth = "0"
+    treeEl.appendChild(docRow)
+    treeEl.appendChild(docKids)
 
-    // Volums externs
+    // Volums
     try {
       const vols = await fetch("/api/volumes").then((r) => r.json())
-      for (const vol of vols) {
-        crearNodeArrel("💾", vol.nom, vol.ruta, treeEl, esSortida, root)
+      for (const v of vols) {
+        const vRow = tr(v.ruta, v.nom, true, v.nom)
+        const vKids = kids()
+        vRow.querySelector(".tr-icon").textContent = "💾"
+        vRow.addEventListener("click", (ev) => onRowClick(treeEl, ev, vRow, v.ruta, true, esSortida, vKids))
+        vRow.style.paddingLeft = "8px"
+        vRow.dataset.depth = "0"
+        treeEl.appendChild(vRow)
+        treeEl.appendChild(vKids)
       }
     } catch { /* no volums */ }
-
-    treeEl.innerHTML = ""
-    treeEl.appendChild(root)
   } catch {
-    treeEl.innerHTML = '<span class="file" style="padding:1rem;display:block;text-align:center">Error en carregar</span>'
+    treeEl.innerHTML = '<span style="padding:1rem;display:block;text-align:center;color:var(--text2)">Error en carregar</span>'
   }
 }
 
 // ============== Analitzar / Convertir ==============
 
-scanBtn.addEventListener("click", () => { if (dirOrigen) doScan(dirOrigen) })
+scanBtn.addEventListener("click", () => { if (dirOrigen) doScan() })
 
-async function doScan(dir) {
+async function doScan() {
   resetResults()
   try {
     const res = await fetch("/api/scan", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ directory: dir, tool: activeTool, recursive: document.getElementById("recursiveCheck").checked }),
+      body: JSON.stringify({ directory: dirOrigen, tool: activeTool, recursive: document.getElementById("recursiveCheck").checked }),
     })
     const data = await res.json()
-    if (data.error) { showToast(data.error, "error"); return }
+    if (data.error) { toast(data.error, "error"); return }
     scannedFiles = data.arxius
-    showToast(data.missatge, data.total > 0 ? "success" : "error")
+    toast(data.missatge, data.total > 0 ? "success" : "error")
     if (activeTool === "imatges") showGallery(data.arxius)
     else showFileList(data.arxius)
     convertBtn.disabled = data.total === 0
-  } catch { showToast("Error d'escaneig", "error") }
+  } catch { toast("Error d'escaneig", "error") }
 }
 
 function showGallery(files) {
-  gallery.classList.remove("hidden")
-  fileList.classList.add("hidden")
-  gallery.innerHTML = files.map((f) => `<img src="/api/preview?path=${encodeURIComponent(f)}" alt="" loading="lazy" />`).join("")
+  gallery.classList.remove("hidden"); fileList.classList.add("hidden")
+  gallery.innerHTML = files.map((f) => `<img src="/api/preview?path=${encodeURIComponent(f)}" loading="lazy" />`).join("")
 }
-
 function showFileList(files) {
-  fileList.classList.remove("hidden")
-  gallery.classList.add("hidden")
+  fileList.classList.remove("hidden"); gallery.classList.add("hidden")
   fileList.innerHTML = files.map((f) => `<div class="file">${f}</div>`).join("")
 }
-
 function resetResults() {
   scannedFiles = []
   gallery.innerHTML = ""; gallery.classList.add("hidden")
@@ -262,87 +202,55 @@ function resetResults() {
 
 convertBtn.addEventListener("click", async () => {
   if (scannedFiles.length === 0) return
-  const dir = dirOrigen
-  const output = dirSortida || dirOrigen
+  const dir = dirOrigen, output = dirSortida || dirOrigen
   const overwrite = document.getElementById("overwriteCheck").checked
   const recursive = document.getElementById("recursiveCheck").checked
-
   statusLog.innerHTML = ""; statusLog.classList.remove("hidden")
   convertBtn.disabled = true; convertBtn.textContent = "Convertint..."
-  let ok = 0, skip = 0, fail = 0, mida = 0
-  const start = Date.now()
+  let ok = 0, skip = 0, fail = 0, mida = 0; const start = Date.now()
 
   let url = ""
   const params = new URLSearchParams({ dir, output, overwrite: String(overwrite), recursive: String(recursive), files: scannedFiles.join(",") })
-
   if (activeTool === "imatges") {
-    url = "/api/convert-images"
-    params.set("quality", qualityRange.value)
-    params.set("speed", speedRange.value)
+    url = "/api/convert-images"; params.set("quality", qualityRange.value); params.set("speed", speedRange.value)
     params.set("lossless", String(document.getElementById("losslessCheck").checked))
-  } else if (activeTool === "vectors") {
-    url = "/api/optimize-svgs"
-    params.set("precision", precisionRange.value)
-  } else {
-    url = "/api/convert-fonts"
-  }
+  } else if (activeTool === "vectors") { url = "/api/optimize-svgs"; params.set("precision", precisionRange.value) }
+  else { url = "/api/convert-fonts" }
 
   try {
     const es = new EventSource(`${url}?${params.toString()}`)
-    es.onmessage = (event) => {
+    es.onmessage = (ev) => {
       try {
-        const ev = JSON.parse(event.data)
-        if (ev.error) { log(`ERROR: ${ev.error}`, "fail"); es.close(); finalitzar(); return }
-        const name = ev.arxiu.split("/").pop()
-        const prefix = `[${ev.actual}/${ev.total}]`
-        if (ev.estat === "ok") {
-          ok++; if (ev.midaDespres) mida += ev.midaDespres
-          const pct = ev.midaAbans && ev.midaDespres ? Math.round(100 - (ev.midaDespres * 100) / ev.midaAbans) : 0
-          log(`${prefix} OK ${name} → ${ev.sortida.split("/").pop()} (${fmtMida(ev.midaAbans)} → ${fmtMida(ev.midaDespres)}, ${pct}%)`, "ok")
-        } else if (ev.estat === "skip") {
-          skip++; log(`${prefix} SKIP ${name} → ${ev.sortida.split("/").pop()} (ja existia)`, "skip")
-        } else if (ev.estat === "fail") {
-          fail++; log(`${prefix} FAIL ${name}: ${ev.missatge || ""}`, "fail")
-        }
-      } catch { /* ignora */ }
+        const d = JSON.parse(ev.data)
+        if (d.error) { log(`ERROR: ${d.error}`, "fail"); es.close(); fi(); return }
+        const nm = d.arxiu.split("/").pop(), pre = `[${d.actual}/${d.total}]`
+        if (d.estat === "ok") {
+          ok++; if (d.midaDespres) mida += d.midaDespres
+          const pct = d.midaAbans && d.midaDespres ? Math.round(100 - (d.midaDespres * 100) / d.midaAbans) : 0
+          log(`${pre} OK ${nm} → ${d.sortida.split("/").pop()} (${fmt(d.midaAbans)} → ${fmt(d.midaDespres)}, ${pct}%)`, "ok")
+        } else if (d.estat === "skip") { skip++; log(`${pre} SKIP ${nm} → ${d.sortida.split("/").pop()} (ja existia)`, "skip") }
+        else if (d.estat === "fail") { fail++; log(`${pre} FAIL ${nm}: ${d.missatge || ""}`, "fail") }
+      } catch {}
     }
-    es.onerror = () => { es.close(); finalitzar() }
-  } catch (err) { log(`ERROR: ${err.message}`, "fail"); finalitzar() }
+    es.onerror = () => { es.close(); fi() }
+  } catch (err) { log(`ERROR: ${err.message}`, "fail"); fi() }
 
-  function finalitzar() {
-    const elapsed = ((Date.now() - start) / 1000).toFixed(1)
-    log("---", "sep")
-    log(`Fet: ${ok}/${scannedFiles.length} en ${elapsed}s`, "ok")
+  function fi() {
+    const el = ((Date.now() - start) / 1000).toFixed(1)
+    log("---", "sep"); log(`Fet: ${ok}/${scannedFiles.length} en ${el}s`, "ok")
     if (skip > 0) log(`${skip} omesa/es (ja existien)`, "skip")
     if (fail > 0) log(`${fail} error/s`, "fail")
-    if (ok > 0) log(`Mida total: ${fmtMida(mida)}`, "ok")
-    convertBtn.disabled = false
-    convertBtn.textContent = activeTool === "vectors" ? "Optimitza" : "Convertir"
-    showToast(`Fet: ${ok}/${scannedFiles.length} en ${elapsed}s`, ok > 0 ? "success" : "error")
+    if (ok > 0) log(`Mida total: ${fmt(mida)}`, "ok")
+    convertBtn.disabled = false; convertBtn.textContent = activeTool === "vectors" ? "Optimitza" : "Convertir"
+    toast(`Fet: ${ok}/${scannedFiles.length} en ${el}s`, ok > 0 ? "success" : "error")
   }
 })
 
-function log(text, cls) {
-  const el = document.createElement("div")
-  el.className = cls; el.textContent = text
-  statusLog.appendChild(el)
-  statusLog.scrollTop = statusLog.scrollHeight
-}
+function log(t, c) { const e = document.createElement("div"); e.className = c; e.textContent = t; statusLog.appendChild(e); statusLog.scrollTop = statusLog.scrollHeight }
+function toast(m, t) { const e = document.createElement("div"); e.className = `toast ${t}`; e.textContent = m; document.body.appendChild(e); setTimeout(() => e.remove(), 3000) }
+function fmt(b) { if (b < 1024) return `${b}B`; if (b < 1048576) return `${(b / 1024).toFixed(1)}KB`; return `${(b / 1048576).toFixed(1)}MB` }
 
-function showToast(msg, type) {
-  const t = document.createElement("div")
-  t.className = `toast ${type}`; t.textContent = msg
-  document.body.appendChild(t)
-  setTimeout(() => t.remove(), 3000)
-}
-
-function fmtMida(b) {
-  if (b < 1024) return `${b}B`
-  if (b < 1024 * 1024) return `${(b / 1024).toFixed(1)}KB`
-  return `${(b / (1024 * 1024)).toFixed(1)}MB`
-}
-
-// Inicialitzar
+// Engegar
 HOME = document.documentElement.dataset.home || "/Users"
 initTree(treeOrigen, false)
 initTree(treeSortida, true)

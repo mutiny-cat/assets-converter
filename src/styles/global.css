@@ -30,18 +30,32 @@ h1{font-size:1.5rem;color:var(--accent2);margin-bottom:.25rem}
 
 /* Arbre */
 .section-label{display:block;font-size:.75rem;color:var(--text2);font-weight:600;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.05em}
+
 .browser{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:.5rem;overflow:hidden}
-.browser-tree{max-height:380px;overflow:auto;padding:.2rem 0}
-.tree-node{display:flex;align-items:center;min-height:30px;padding:2px 6px;cursor:pointer;white-space:nowrap;border-bottom:1px solid transparent}
-.tree-node:hover{background:var(--bg3);border-bottom-color:var(--border)}
-.tree-node.selected{background:var(--accent);color:var(--bg)}
-.tree-node.selected .tree-name{color:var(--bg)}
-.tree-toggle{width:20px;height:30px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:var(--text2);flex-shrink:0}
-.tree-toggle:hover{color:var(--text)}
-.tree-icon{width:22px;text-align:center;flex-shrink:0;font-size:15px;margin-right:2px}
-.tree-name{font-size:.875rem;overflow:hidden;text-overflow:ellipsis;padding-right:4px}
-.tree-name.dir-name{color:var(--accent2)}
-.tree-name.file-name{color:var(--text2)}
+.browser-tree{max-height:420px;overflow:auto;padding:.3rem 0;font-size:.85rem;line-height:1.6}
+
+/* Fila de l'arbre */
+.tr{display:flex;align-items:center;height:32px;padding:0 8px;cursor:pointer;position:relative}
+.tr:hover{background:var(--bg3)}
+.tr.sel,.tr.sel:hover{background:var(--accent);color:var(--bg)}
+.tr.sel .tr-name,.tr.sel .tr-arr{color:var(--bg)}
+
+/* Fletxa expandir */
+.tr-arr{width:18px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;color:var(--text2);transition:transform .12s}
+.tr-arr.open{transform:rotate(90deg)}
+.tr-arr.hidden{visibility:hidden}
+
+/* Icona */
+.tr-icon{width:22px;text-align:center;flex-shrink:0;font-size:15px}
+
+/* Nom */
+.tr-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px}
+.tr-name.dir{color:var(--accent2);font-weight:500}
+.tr-name.file{color:var(--text2)}
+
+/* Fills (contenidor indentat) */
+.tr-kids{padding-left:0}
+
 .browser-footer{display:flex;align-items:center;justify-content:space-between;padding:.4rem .6rem;border-top:1px solid var(--border);background:var(--bg3)}
 .browser-path{font-family:var(--font);font-size:.75rem;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:68%}
 
