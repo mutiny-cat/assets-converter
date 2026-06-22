@@ -30,10 +30,6 @@ pnpm build
 node dist/server/entry.mjs
 ```
 
-## Accés directe a l'escriptori (macOS)
-
-Hi ha un `.app` a l'escriptori (`Assets Converter.app`). Fes-hi doble clic per executar el servidor i obrir el navegador automàticament.
-
 ## Eines
 
 | Eina | Funció | Entrada | Sortida |
