@@ -104,3 +104,7 @@ De vegades cal optimitzar els PNG i JPEG originals sense canviar de format. Per 
 ## Agraïments
 
 A <a href="https://www.stucom.com" target="_blank" rel="noopener">STUCOM</a> i a la <a href="https://www.fib.upc.edu" target="_blank" rel="noopener">FIB — Facultat d'Informàtica de Barcelona</a> per formar la comunitat dev catalana.
+
+---
+
+Fet amb ❤️ des de Catalunya pel Món
