@@ -121,4 +121,7 @@ button{padding:.4rem .85rem;border:none;border-radius:var(--radius);cursor:point
 .toast{position:fixed;bottom:1rem;right:1rem;padding:.75rem 1.25rem;border-radius:var(--radius);font-size:.875rem;font-weight:500;z-index:1000;animation:slideIn .2s ease}
 .toast.success{background:var(--green);color:var(--bg)}
 .toast.error{background:var(--red);color:var(--bg)}
-@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+/* Footer */
+.footer{text-align:center;margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.75rem;color:var(--text2)}
+.footer a{color:var(--accent);text-decoration:none}
+.footer a:hover{text-decoration:underline}
