@@ -24,6 +24,17 @@ const HOME = os.homedir()
   <main class="main">
     <h1>Assets Converter</h1>
     <button class="btn-shutdown" id="shutdownBtn" type="button" title="Aturar el servidor"><span class="shutdown-icon">⏻</span> Sortir de l'aplicació</button>
+
+    <!-- Modal de confirmació per tancar el servidor -->
+    <div class="modal-overlay hidden" id="shutdownModal">
+      <div class="modal-box">
+        <p class="modal-text">Segur que vols aturar el servidor?</p>
+        <div class="modal-actions">
+          <button class="btn-secondary" id="modalCancel">Cancel·lar</button>
+          <button class="btn-primary" id="modalConfirm" style="background:var(--red)">Aturar</button>
+        </div>
+      </div>
+    </div>
     <p class="subtitle">Convertidor d'actius local: imatges a WebP, optimització SVG i fonts a WOFF2</p>
 
     <div class="tool-tabs" id="toolTabs">

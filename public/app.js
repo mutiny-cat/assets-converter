@@ -296,9 +296,15 @@ initTree(treeSortida, true)
 $("resetOrigen").addEventListener("click", () => resetarSeleccio(false))
 $("resetSortida").addEventListener("click", () => resetarSeleccio(true))
 
-// Botó tancar servidor
-$("shutdownBtn").addEventListener("click", async () => {
-  if (!confirm("Segur que vols aturar el servidor?")) return
+// Botó tancar servidor (modal)
+$("shutdownBtn").addEventListener("click", () => {
+  $("shutdownModal").classList.remove("hidden")
+})
+$("modalCancel").addEventListener("click", () => {
+  $("shutdownModal").classList.add("hidden")
+})
+$("modalConfirm").addEventListener("click", async () => {
+  $("shutdownModal").classList.add("hidden")
   try { await fetch("/api/shutdown", { method: "POST" }) } catch {}
 })
 
