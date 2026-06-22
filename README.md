@@ -2,6 +2,8 @@
 
 Convertidor d'arxius de recursos locals pel desenvolupament de projectes web: imatges a WebP, optimització SVG i fonts a WOFF2.
 
+Aquest projecte és una pràctica d'aprenentatge, no pretén ser una aplicació comercial. Qualsevol persona en pot fer ús sense cap limitació.
+
 ---
 
 ## Objectiu
@@ -96,7 +98,3 @@ Una font tipogràfica completa (700 caràcters) pot ocupar 200 KB. Si només nec
 ### Optimització de PNG i JPEG addicional
 
 De vegades cal optimitzar els PNG i JPEG originals sense canviar de format. Per exemple: reduir la paleta de colors d'un PNG amb compressió amb pèrdua, o recomprimir un JPEG amb paràmetres més eficients. `sharp` cobreix part d'aquestes necessitats, però eines especialitzades com `pngquant` o `mozjpeg` poden aconseguir millors resultats en casos concrets.
-
----
-
-Aquest projecte és una pràctica d'aprenentatge, no pretén ser una aplicació comercial. Qualsevol persona en pot fer ús sense cap limitació.
