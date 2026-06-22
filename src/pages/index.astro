@@ -29,15 +29,13 @@ const HOME = os.homedir()
           <label>Qualitat</label>
           <input type="range" id="qualityRange" min="0" max="100" value="80" />
           <span class="value" id="qualityValue">80</span>
-        </div>
-        <div class="config-row">
           <label>Velocitat</label>
           <input type="range" id="speedRange" min="0" max="6" value="4" />
           <span class="value" id="speedValue">4</span>
+          <label class="config-check" style="margin-left:.5rem">
+            <input type="checkbox" id="losslessCheck" /> Sense pèrdua
+          </label>
         </div>
-        <label class="config-check">
-          <input type="checkbox" id="losslessCheck" /> Sense pèrdua
-        </label>
       </div>
       <div id="configVectors" class="hidden">
         <div class="config-row">
@@ -51,37 +49,34 @@ const HOME = os.homedir()
       </div>
     </div>
 
-    <label class="section-label">Directori d'origen</label>
-    <div class="browser">
-      <div class="browser-tree" id="treeOrigen"></div>
-      <div class="browser-footer">
-        <span class="browser-path" id="pathOrigen">—</span>
-        <button class="btn-primary" id="scanBtn" type="button" disabled>Analitzar</button>
+    <div class="browser-row">
+      <div class="browser-col">
+        <label class="section-label">Directori d'origen</label>
+        <div class="browser">
+          <div class="browser-tree" id="treeOrigen"></div>
+          <div class="browser-footer">
+            <span class="browser-path" id="pathOrigen">—</span>
+            <label><input type="checkbox" id="recursiveCheck" /> Recursiu</label>
+            <button class="btn-primary" id="scanBtn" type="button" disabled>Analitzar</button>
+          </div>
+        </div>
+      </div>
+      <div class="browser-col">
+        <label class="section-label">Directori de sortida</label>
+        <div class="browser">
+          <div class="browser-tree" id="treeSortida"></div>
+          <div class="browser-footer">
+            <span class="browser-path" id="pathSortida">—</span>
+            <label><input type="checkbox" id="overwriteCheck" /> Sobreescriure</label>
+            <button class="btn-primary" id="convertBtn" type="button" disabled>Convertir</button>
+          </div>
+        </div>
       </div>
     </div>
-
-    <label class="config-check" style="margin-bottom:.75rem">
-      <input type="checkbox" id="recursiveCheck" /> Cerca recursiva
-    </label>
-
-    <label class="section-label">Directori de sortida</label>
-    <div class="browser">
-      <div class="browser-tree" id="treeSortida"></div>
-      <div class="browser-footer">
-        <span class="browser-path" id="pathSortida">—</span>
-      </div>
-    </div>
-
-    <label class="config-check" style="margin-top:.75rem;margin-bottom:1rem">
-      <input type="checkbox" id="overwriteCheck" />
-      Sobreescriure arxius existents (si no, s'afegeix sufix _001, _002...)
-    </label>
 
     <div class="gallery" id="gallery"></div>
     <div class="file-list hidden" id="fileList"></div>
     <div class="status-log hidden" id="statusLog"></div>
-
-    <button class="btn-primary btn-big" id="convertBtn" type="button" disabled>Convertir</button>
   </main>
 
   <script is:inline src="/app.js"></script>
