@@ -34,6 +34,7 @@ const HOME = os.homedir()
           <span class="value" id="speedValue">4</span>
           <label class="config-check" style="margin-left:.5rem">
             <input type="checkbox" id="losslessCheck" /> Sense pèrdua
+            <span class="hint">Conserva tots els píxels. L'arxiu serà més gran.</span>
           </label>
         </div>
       </div>
@@ -56,7 +57,7 @@ const HOME = os.homedir()
           <div class="browser-tree" id="treeOrigen"></div>
           <div class="browser-footer">
             <span class="browser-path" id="pathOrigen">—</span>
-            <label><input type="checkbox" id="recursiveCheck" /> Recursiu</label>
+            <label><input type="checkbox" id="recursiveCheck" /> Recursiu <span class="hint">Cerca dins de les subcarpetes.</span></label>
             <button class="btn-primary" id="scanBtn" type="button" disabled>Analitzar</button>
           </div>
         </div>
@@ -67,7 +68,7 @@ const HOME = os.homedir()
           <div class="browser-tree" id="treeSortida"></div>
           <div class="browser-footer">
             <span class="browser-path" id="pathSortida">—</span>
-            <label><input type="checkbox" id="overwriteCheck" /> Sobreescriure</label>
+            <label><input type="checkbox" id="overwriteCheck" /> Sobreescriure <span class="hint">Si no, afegeix sufix _001, _002...</span></label>
             <button class="btn-primary" id="convertBtn" type="button" disabled>Convertir</button>
           </div>
         </div>
