@@ -4,6 +4,16 @@ Convertidor d'arxius de recursos locals pel desenvolupament de projectes web: im
 
 Aquest projecte és una pràctica d'aprenentatge, no pretén ser una aplicació comercial. Qualsevol persona en pot fer ús sense cap limitació.
 
+- [Objectiu](#objectiu)
+- [Tecnologies](#tecnologies)
+- [Requisits](#requisits)
+- [Dependències](#dependències)
+- [Ús](#ús)
+- [Plataformes](#plataformes)
+- [Eines](#eines)
+- [Comportament de sobreescriptura](#comportament-de-sobreescriptura)
+- [Agraïments](#agraïments)
+
 ---
 
 ## Objectiu
