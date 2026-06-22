@@ -306,6 +306,7 @@ $("modalCancel").addEventListener("click", () => {
 $("modalConfirm").addEventListener("click", async () => {
   $("shutdownModal").classList.add("hidden")
   try { await fetch("/api/shutdown", { method: "POST" }) } catch {}
+  document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:var(--bg);color:var(--text2);font-family:system-ui,sans-serif;font-size:1.1rem;text-align:center;flex-direction:column;gap:.5rem"><span>⏻ Servidor aturat</span><span style="font-size:.8rem;opacity:.6">Ja pots tancar aquesta pestanya</span></div>'
 })
 
 function resetarSeleccio(esSortida) {
