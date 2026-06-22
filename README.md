@@ -103,4 +103,4 @@ De vegades cal optimitzar els PNG i JPEG originals sense canviar de format. Per 
 
 ## Agraïments
 
-A [STUCOM](https://www.stucom.com) i a la [FIB — Facultat d'Informàtica de Barcelona](https://www.fib.upc.edu) per formar la comunitat dev catalana.
+A <a href="https://www.stucom.com" target="_blank" rel="noopener">STUCOM</a> i a la <a href="https://www.fib.upc.edu" target="_blank" rel="noopener">FIB — Facultat d'Informàtica de Barcelona</a> per formar la comunitat dev catalana.
