@@ -13,7 +13,8 @@ export const GET: APIRoute = async () => {
   try {
     for (const nom of fs.readdirSync(volDir)) {
       const ruta = path.join(volDir, nom)
-      if (fs.statSync(ruta).isDirectory() && !nom.startsWith(".") && nom !== "Macintosh HD") {
+      const sistema = ["Macintosh HD", "BOOTCAMP", "Preboot", "Recovery", "VM", "Update", "xART"]
+      if (fs.statSync(ruta).isDirectory() && !nom.startsWith(".") && !sistema.includes(nom)) {
         volums.push({ nom, ruta })
       }
     }
