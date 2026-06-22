@@ -21,6 +21,19 @@ pnpm dev
 
 Obre http://localhost:9999 al navegador.
 
+El mode `dev` engega ràpid i recarrega automàticament en modificar el codi. És l'indicat per a ús local diari.
+
+Per a un entorn de producció (sense recàrrega automàtica, més ràpid en execució):
+
+```bash
+pnpm build
+node dist/server/entry.mjs
+```
+
+## Accés directe a l'escriptori (macOS)
+
+Hi ha un `.app` a l'escriptori (`Assets Converter.app`). Fes-hi doble clic per engegar el servidor i obrir el navegador automàticament.
+
 ## Eines
 
 | Eina | Funció | Entrada | Sortida |
