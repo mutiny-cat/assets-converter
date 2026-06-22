@@ -53,7 +53,7 @@ Hi ha un `.app` a l'escriptori (`Assets Converter.app`). Fes-hi doble clic per e
 
 ## Comportament de sobreescriptura
 
-Si no se sobreescriu i l'arxiu de sortida ja existeix, s'afegeix sufix `_001`, `_002`...
+Si no se sobreescriu i l'arxiu de sortida ja existeix, s'afegeix un sufix `_001`, `_002`...
 
 ## Plataformes
 
