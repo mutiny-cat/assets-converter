@@ -1,7 +1,7 @@
 {
   "name": "assets-converter",
   "version": "1.0.0",
-  "description": "Convertidor d'actius local: imatges a WebP, optimització SVG i fonts a WOFF2",
+  "description": "Convertidor d'arxius de recursos locals pel desenvolupament de projectes web: imatges a WebP, optimització SVG i fonts a WOFF2",
   "license": "CC0-1.0",
   "type": "module",
   "scripts": {

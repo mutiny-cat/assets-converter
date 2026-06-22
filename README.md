@@ -1,6 +1,6 @@
 # Assets Converter
 
-Convertidor d'actius local: imatges a WebP, optimització SVG i fonts a WOFF2.
+Convertidor d'arxius de recursos locals pel desenvolupament de projectes web: imatges a WebP, optimització SVG i fonts a WOFF2.
 
 ## Requisits
 
