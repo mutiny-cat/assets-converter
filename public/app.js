@@ -286,7 +286,13 @@ function toast(m, t) { const e = document.createElement("div"); e.className = `t
 function fmt(b) { if (b < 1024) return `${b}B`; if (b < 1048576) return `${(b / 1024).toFixed(1)}KB`; return `${(b / 1048576).toFixed(1)}MB` }
 
 // Engegar
-// Engegar l'aplicació: llegeix el directori HOME des del dataset HTML
 HOME = document.documentElement.dataset.home || "/Users"
 initTree(treeOrigen, false)
 initTree(treeSortida, true)
+
+// Botó tancar servidor
+$("shutdownBtn").addEventListener("click", async () => {
+  if (!confirm("Segur que vols aturar el servidor?")) return
+  try { await fetch("/api/shutdown", { method: "POST" }) } catch {}
+  document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:var(--text2);font-family:system-ui;font-size:1.2rem">Servidor aturat. Pots tancar aquesta pestanya.</div>'
+})
