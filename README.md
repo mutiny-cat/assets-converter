@@ -4,6 +4,10 @@ Convertidor d'arxius de recursos locals pel desenvolupament de projectes web: im
 
 ---
 
+## Objectiu
+
+Assets Converter és una eina local que optimitza els recursos d'un projecte web sense necessitat de pujar arxius a cap servidor extern. Selecciones una carpeta, tries el tipus de conversió i els arxius optimitzats es guarden al directori de sortida. Els originals no es modifiquen mai.
+
 ## Tecnologies
 
 | Capa | Tecnologia |
@@ -58,6 +62,22 @@ macOS, Linux, Windows.
 | Imatges | Converteix a WebP | `.jpg` `.jpeg` `.png` | `.webp` |
 | Vectors | Optimitza SVG | `.svg` | `.svg` |
 | Fonts | Converteix a WOFF2 | `.ttf` `.otf` `.woff` | `.woff2` |
+
+### Imatges → WebP
+
+Converteix imatges JPEG i PNG al format **WebP**, que redueix la mida dels arxius entre un 25 % i un 35 % sense pèrdua de qualitat visible. És el format recomanat per a la web perquè millora el temps de càrrega de les pàgines.
+
+Paràmetres: qualitat (0-100), velocitat (0-6) i mode sense pèrdua.
+
+### Vectors → SVG optimitzat
+
+Neteja i optimitza arxius **SVG** eliminant metadades, comentaris, atributs innecessaris i espais en blanc. El resultat és un SVG més petit i net, sense canvis visuals.
+
+Paràmetres: precisió decimal (0-10).
+
+### Fonts → WOFF2
+
+Converteix fonts **TTF**, **OTF** i **WOFF** al format **WOFF2**, el format de fonts comprimit estàndard per a la web. WOFF2 fa servir compressió Brotli i redueix la mida de les fonts fins a un 50 % respecte del WOFF original.
 
 ## Comportament de sobreescriptura
 
