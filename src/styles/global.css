@@ -15,7 +15,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box} /* Reset bàsic */
 body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh}
-.main{position:relative;max-width:100%;margin:0 auto;padding:1.5rem 2rem}
+.main{position:relative;max-width:1920px;margin:0 auto;padding:1.5rem 2rem}
 h1{display:inline;font-size:1.4rem;color:var(--accent2);margin-bottom:.15rem}
 .subtitle{color:var(--text2);font-size:.8rem;margin-bottom:1rem}
 
@@ -47,7 +47,7 @@ input[type=range]:disabled{opacity:.35;cursor:not-allowed}
 
 /* Arbre de directoris navegable */
 .browser{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:.5rem;overflow:hidden}
-.browser-tree{max-height:360px;overflow:auto;padding:.3rem 0;font-size:.85rem;line-height:1.6}
+.browser-tree{height:360px;overflow:auto;padding:.3rem 0;font-size:.85rem;line-height:1.6}
 
 /* Fila de l'arbre */
 .tr{display:flex;align-items:center;height:32px;padding:0 8px;cursor:pointer;position:relative}
