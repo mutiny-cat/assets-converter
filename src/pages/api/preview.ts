@@ -1,7 +1,14 @@
+/**
+ * API de previsualització d'imatges.
+ * Serveix fitxers d'imatge (JPG, PNG, WebP, SVG) per a la galeria
+ * del client. Només retorna tipus MIME permesos.
+ */
+
 import type { APIRoute } from "astro"
 import fs from "node:fs"
 import path from "node:path"
 
+// GET /api/preview?path=<ruta> — serveix la imatge amb el MIME adequat
 export const GET: APIRoute = async ({ url }) => {
   const ruta = url.searchParams.get("path")
   if (!ruta) return new Response("Falta path", { status: 400 })

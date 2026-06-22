@@ -1,8 +1,15 @@
+/**
+ * API de conversió de fonts a WOFF2.
+ * Rep una llista de fitxers de font i retorna un flux SSE
+ * amb el progrés de la conversió de cada fitxer.
+ */
+
 import type { APIRoute } from "astro"
 import fs from "node:fs"
 import { convertirFonts } from "../../lib/converter-font"
 import type { ProgresConversio } from "../../lib/types"
 
+// GET /api/convert-fonts?dir=...&output=...&overwrite=...&files=...
 export const GET: APIRoute = async ({ url }) => {
   const dir = url.searchParams.get("dir")
   const output = url.searchParams.get("output")

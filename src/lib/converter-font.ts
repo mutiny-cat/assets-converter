@@ -1,3 +1,9 @@
+/**
+ * Convertidor de fonts tipogràfiques a WOFF2.
+ * Converteix fonts TTF, OTF i WOFF a WOFF2 mitjançant wawoff2.
+ * Per a OTF i WOFF, primer es converteixen a TTF amb opentype.js.
+ */
+
 import fs from "node:fs"
 import path from "node:path"
 import wawoff2 from "wawoff2"
@@ -5,6 +11,7 @@ import * as opentype from "opentype.js"
 import type { ProgresConversio } from "./types"
 import { resoldreSortida } from "./suffix"
 
+// Converteix una llista de fonts a WOFF2. OTF i WOFF passen per TTF intermèdia amb opentype.js
 export async function convertirFonts(
   arxius: string[],
   directoriSortida: string,
@@ -29,6 +36,7 @@ export async function convertirFonts(
       const midaAbans = fs.statSync(arxiu).size
       let ttfBuffer: Uint8Array
 
+      // TTF es llegeix directament, OTF/WOFF es converteixen a TTF amb opentype.js
       if (ext === ".ttf") {
         ttfBuffer = fs.readFileSync(arxiu)
       } else {

@@ -1,8 +1,16 @@
+/**
+ * API de conversió d'imatges a WebP.
+ * Rep paràmetres de configuració i una llista de fitxers,
+ * i retorna un flux SSE (Server-Sent Events) amb el progrés
+ * de la conversió en temps real.
+ */
+
 import type { APIRoute } from "astro"
 import fs from "node:fs"
 import { convertirImatges } from "../../lib/converter-image"
 import type { ConfigImatges, ProgresConversio } from "../../lib/types"
 
+// GET /api/convert-images?dir=...&output=...&quality=...&speed=...&lossless=...&overwrite=...&files=...
 export const GET: APIRoute = async ({ url }) => {
   const dir = url.searchParams.get("dir")
   const output = url.searchParams.get("output")
@@ -20,7 +28,7 @@ export const GET: APIRoute = async ({ url }) => {
   if (!fs.existsSync(sortida)) fs.mkdirSync(sortida, { recursive: true })
 
   const stream = new ReadableStream({
-    async start(controller) {
+    async start(controller) { // Flux SSE: envia esdeveniments de progrés al client
       try {
         await convertirImatges(files, sortida, config, overwrite, (ev: ProgresConversio) => {
           controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify(ev)}\n\n`))

@@ -1,9 +1,17 @@
-// Estat global
+/**
+ * Client JavaScript del convertidor d'actius.
+ * Gestiona la interfície d'usuari: pestanyes d'eina, arbres de directoris,
+ * escaneig de fitxers, previsualització, conversió amb SSE i notificacions.
+ */
+
+// Estat global de l'aplicació
 let activeTool = "imatges", scannedFiles = [], dirOrigen = "", dirSortida = ""
+// Cache de respostes de navegació per evitar crides repetides
 const cache = {}
 let HOME = ""
 
 // DOM
+// Accés abreujat al DOM
 const $ = (id) => document.getElementById(id)
 const toolTabs = $("toolTabs")
 const configImatges = $("configImatges"), configVectors = $("configVectors"), configFonts = $("configFonts")
@@ -15,11 +23,12 @@ const pathOrigen = $("pathOrigen"), pathSortida = $("pathSortida")
 const scanBtn = $("scanBtn"), convertBtn = $("convertBtn")
 const gallery = $("gallery"), fileList = $("fileList"), statusLog = $("statusLog")
 
+// Sincronitza el valor mostrat amb el control lliscant
 qualityRange.oninput = () => { qualityValue.textContent = qualityRange.value }
 speedRange.oninput = () => { speedValue.textContent = speedRange.value }
 precisionRange.oninput = () => { precisionValue.textContent = precisionRange.value }
 
-// "Sense pèrdua" deshabilita qualitat i velocitat
+// Quan "Sense pèrdua" està actiu, deshabilita els controls de qualitat i velocitat
 const losslessCheck = $("losslessCheck")
 losslessCheck.addEventListener("change", () => {
   const dis = losslessCheck.checked
@@ -29,6 +38,7 @@ losslessCheck.addEventListener("change", () => {
   speedValue.style.opacity = dis ? ".4" : "1"
 })
 
+// Canvi de pestanya d'eina: mostra/amaga els panells de configuració corresponents
 toolTabs.addEventListener("click", (e) => {
   const tab = e.target.closest(".tool-tab")
   if (!tab) return
@@ -42,8 +52,9 @@ toolTabs.addEventListener("click", (e) => {
   resetResults()
 })
 
-// ============== Arbre ==============
+// ============== Arbre de directoris ==============
 
+// Obté el contingut d'un directori via l'API, amb caché local
 async function fetchDir(dir, esSortida) {
   if (cache[dir]) return cache[dir]
   const tool = esSortida ? "" : `&tool=${activeTool}`
@@ -54,6 +65,7 @@ async function fetchDir(dir, esSortida) {
   return data
 }
 
+// Crea una fila de l'arbre (carpeta o fitxer) amb fletxa, icona i nom
 function tr(dir, name, isDir, rootLabel) {
   const row = document.createElement("div")
   row.className = "tr"
@@ -82,6 +94,7 @@ function tr(dir, name, isDir, rootLabel) {
   return row
 }
 
+// Crea un contenidor per als fills d'una carpeta (col·lapsat per defecte)
 function kids() {
   const el = document.createElement("div")
   el.className = "tr-kids"
@@ -89,6 +102,7 @@ function kids() {
   return el
 }
 
+// Expandeix o col·lapsa una carpeta, carregant-ne el contingut si cal
 async function toggle(treeEl, row, path, esSortida, children) {
   const arr = row.querySelector(":scope > .tr-arr")
   if (!arr || arr.classList.contains("hidden")) return
@@ -117,6 +131,7 @@ async function toggle(treeEl, row, path, esSortida, children) {
   }
 }
 
+// Gestiona el clic a una fila: selecciona el directori i expandeix si és carpeta
 function onRowClick(treeEl, ev, row, path, isDir, esSortida, children) {
   // Clic a la fletxa = només expandir, no seleccionar
   if (ev.target.closest(".tr-arr")) {
@@ -139,6 +154,7 @@ function onRowClick(treeEl, ev, row, path, isDir, esSortida, children) {
   if (isDir && children) toggle(treeEl, row, path, esSortida, children)
 }
 
+// Inicialitza un arbre de directoris amb Documents i els volums muntats
 async function initTree(treeEl, esSortida) {
   try {
     treeEl.innerHTML = ""
@@ -172,10 +188,12 @@ async function initTree(treeEl, esSortida) {
   }
 }
 
-// ============== Analitzar / Convertir ==============
+// ============== Escaneig / Conversió ==============
 
+// Inicia l'escaneig de fitxers al directori seleccionat
 scanBtn.addEventListener("click", () => { if (dirOrigen) doScan() })
 
+// Crida a l'API d'escaneig i mostra els resultats (galeria o llista)
 async function doScan() {
   resetResults()
   try {
@@ -194,14 +212,17 @@ async function doScan() {
   } catch { toast("Error d'escaneig", "error") }
 }
 
+// Mostra miniatures d'imatge a la galeria
 function showGallery(files) {
   gallery.classList.remove("hidden"); fileList.classList.add("hidden")
   gallery.innerHTML = files.map((f) => `<img src="/api/preview?path=${encodeURIComponent(f)}" loading="lazy" />`).join("")
 }
+// Mostra la llista de rutes de fitxer (per a SVG i fonts)
 function showFileList(files) {
   fileList.classList.remove("hidden"); gallery.classList.add("hidden")
   fileList.innerHTML = files.map((f) => `<div class="file">${f}</div>`).join("")
 }
+// Neteja els resultats d'un escaneig anterior
 function resetResults() {
   scannedFiles = []
   gallery.innerHTML = ""; gallery.classList.add("hidden")
@@ -210,6 +231,7 @@ function resetResults() {
   convertBtn.disabled = true
 }
 
+// Inicia la conversió: obre un flux SSE i actualitza el log en temps real
 convertBtn.addEventListener("click", async () => {
   if (scannedFiles.length === 0) return
   const dir = dirOrigen, output = dirSortida || dirOrigen
@@ -256,11 +278,15 @@ convertBtn.addEventListener("click", async () => {
   }
 })
 
+// Envia un missatge al log de conversió amb el color corresponent a l'estat
 function log(t, c) { const e = document.createElement("div"); e.className = c; e.textContent = t; statusLog.appendChild(e); statusLog.scrollTop = statusLog.scrollHeight }
+// Mostra una notificació temporal a la cantonada
 function toast(m, t) { const e = document.createElement("div"); e.className = `toast ${t}`; e.textContent = m; document.body.appendChild(e); setTimeout(() => e.remove(), 3000) }
+// Formata bytes en una representació llegible (B, KB, MB)
 function fmt(b) { if (b < 1024) return `${b}B`; if (b < 1048576) return `${(b / 1024).toFixed(1)}KB`; return `${(b / 1048576).toFixed(1)}MB` }
 
 // Engegar
+// Engegar l'aplicació: llegeix el directori HOME des del dataset HTML
 HOME = document.documentElement.dataset.home || "/Users"
 initTree(treeOrigen, false)
 initTree(treeSortida, true)

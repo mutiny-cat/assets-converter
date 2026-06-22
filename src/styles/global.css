@@ -1,3 +1,10 @@
+/*
+ * Estils globals del convertidor d'actius.
+ * Tema fosc amb paleta Catppuccin Mocha. Defineix les variables CSS,
+ * el layout de dues columnes, l'arbre de directoris, les pestanyes,
+ * els panells de configuració, la galeria, el log d'estat i els toasts.
+ */
+
 :root {
   --bg: #1e1e2e; --bg2: #181825; --bg3: #313244;
   --text: #cdd6f4; --text2: #a6adc8;
@@ -6,19 +13,21 @@
   --border: #45475a; --radius: 8px;
   --font: "SF Mono", "Fira Code", "Cascadia Code", monospace;
 }
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box} /* Reset bàsic */
 body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh}
 .main{max-width:100%;margin:0 auto;padding:1.5rem 2rem}
 h1{font-size:1.4rem;color:var(--accent2);margin-bottom:.15rem}
 .subtitle{color:var(--text2);font-size:.8rem;margin-bottom:1rem}
 
 /* Tabs */
+/* Pestanyes de selecció d'eina (Imatges, Vectors, Fonts) */
 .tool-tabs{display:flex;gap:.25rem;margin-bottom:.75rem;background:var(--bg2);border-radius:var(--radius);padding:.25rem}
 .tool-tab{flex:1;padding:.5rem 1rem;border:none;background:transparent;color:var(--text2);cursor:pointer;border-radius:6px;font-size:.85rem;font-weight:500;text-align:center;transition:all .15s}
 .tool-tab:hover{color:var(--text);background:var(--bg3)}
 .tool-tab.active{background:var(--accent);color:var(--bg);font-weight:600}
 
 /* Panell config */
+/* Panell de configuració (qualitat, velocitat, precisió) */
 .config-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:.75rem 1rem;margin-bottom:.75rem}
 .config-row{display:flex;gap:.75rem;align-items:center;margin-bottom:.5rem;flex-wrap:wrap}
 .config-row:last-child{margin-bottom:0}
@@ -36,6 +45,7 @@ input[type=range]:disabled{opacity:.35;cursor:not-allowed}
 /* Arbre */
 .section-label{display:block;font-size:.75rem;color:var(--text2);font-weight:600;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.05em}
 
+/* Arbre de directoris navegable */
 .browser{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:.5rem;overflow:hidden}
 .browser-tree{max-height:360px;overflow:auto;padding:.3rem 0;font-size:.85rem;line-height:1.6}
 
@@ -71,13 +81,16 @@ input[type=range]:disabled{opacity:.35;cursor:not-allowed}
 .hint{font-size:.65rem;color:var(--text2);opacity:.7;margin-left:.25rem}
 
 /* Galeria */
+/* Galeria de previsualització d'imatges */
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.5rem;margin-bottom:1rem;max-height:300px;overflow-y:auto;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:.5rem}
 .gallery img{width:100%;height:100px;object-fit:cover;border-radius:4px;transition:opacity .15s}
 .gallery img:hover{opacity:.8}
+/* Llista de fitxers trobats (per a SVG i fonts) */
 .file-list{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:.75rem;margin-bottom:1rem;max-height:200px;overflow-y:auto}
 .file-list .file{font-family:var(--font);font-size:.8rem;color:var(--text2);padding:.15rem 0;word-break:break-all}
 
 /* Log */
+/* Log de conversió amb colors per estat */
 .status-log{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:.75rem;margin-bottom:1rem;font-family:var(--font);font-size:.75rem;white-space:pre-wrap;max-height:250px;overflow-y:auto}
 .status-log .ok{color:var(--green)}
 .status-log .skip{color:var(--yellow)}
@@ -91,6 +104,7 @@ button{padding:.4rem .85rem;border:none;border-radius:var(--radius);cursor:point
 .hidden{display:none!important}
 
 /* Toast */
+/* Notificacions efímeres (toast) */
 .toast{position:fixed;bottom:1rem;right:1rem;padding:.75rem 1.25rem;border-radius:var(--radius);font-size:.875rem;font-weight:500;z-index:1000;animation:slideIn .2s ease}
 .toast.success{background:var(--green);color:var(--bg)}
 .toast.error{background:var(--red);color:var(--bg)}

@@ -1,8 +1,15 @@
+/**
+ * API d'optimització de fitxers SVG.
+ * Rep paràmetres de configuració (precisió) i una llista de fitxers,
+ * i retorna un flux SSE amb el progrés de l'optimització.
+ */
+
 import type { APIRoute } from "astro"
 import fs from "node:fs"
 import { optimitzarSvgs } from "../../lib/converter-svg"
 import type { ConfigVectors, ProgresConversio } from "../../lib/types"
 
+// GET /api/optimize-svgs?dir=...&output=...&precision=...&overwrite=...&files=...
 export const GET: APIRoute = async ({ url }) => {
   const dir = url.searchParams.get("dir")
   const output = url.searchParams.get("output")

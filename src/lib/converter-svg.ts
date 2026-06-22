@@ -1,9 +1,16 @@
+/**
+ * Optimitzador de fitxers SVG.
+ * Utilitza SVGO per reduir la mida dels SVG eliminant metadades
+ * i optimitzant la precisió dels nombres decimals.
+ */
+
 import fs from "node:fs"
 import path from "node:path"
 import { optimize } from "svgo"
 import type { ConfigVectors, ProgresConversio } from "./types"
 import { resoldreSortida } from "./suffix"
 
+// Optimitza una llista de fitxers SVG amb SVGO, emetent esdeveniments de progrés
 export async function optimitzarSvgs(
   arxius: string[],
   directoriSortida: string,
@@ -20,6 +27,7 @@ export async function optimitzarSvgs(
     const nomBase = path.basename(arxiu, path.extname(arxiu))
     const sortida = resoldreSortida(directoriSortida, nomBase, ".svg", sobreescriure)
 
+    // Omès si la sortida amb sufix ja existeix
     if (!sobreescriure && fs.existsSync(sortida) && sortida !== path.join(directoriSortida, `${nomBase}.svg`)) {
       onProgres({ arxiu, estat: "skip", actual, total: arxius.length, transcorregut: (Date.now() - inici) / 1000, sortida })
       continue
