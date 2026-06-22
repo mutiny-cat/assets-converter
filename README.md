@@ -107,4 +107,4 @@ A <a href="https://www.stucom.com" target="_blank" rel="noopener">STUCOM</a> i a
 
 ---
 
-Fet amb ❤️ des de Catalunya pel Món
+Fet amb ❤️ des de Catalunya
