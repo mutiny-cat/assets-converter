@@ -74,6 +74,9 @@ input[type=range]:disabled{opacity:.35;cursor:not-allowed}
 .browser-footer{display:flex;align-items:center;gap:.5rem;padding:.35rem .55rem;border-top:1px solid var(--border);background:var(--bg3)}
 .browser-path{font-family:var(--font);font-size:.7rem;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
 .browser-footer .btn-primary{padding:.35rem .7rem;font-size:.78rem;flex-shrink:0}
+.btn-reset{width:22px;height:22px;padding:0;border:none;background:transparent;color:var(--text2);font-size:.75rem;cursor:pointer;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.btn-reset:hover{color:var(--red);background:var(--bg3)}
+.btn-reset:disabled{opacity:.3;cursor:default}
 .browser-footer label{font-size:.7rem;color:var(--text2);white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:4px}
 .browser-footer label input{width:13px;height:13px;accent-color:var(--accent)}
 

@@ -66,6 +66,7 @@ const HOME = os.homedir()
           <div class="browser-tree" id="treeOrigen"></div>
           <div class="browser-footer">
             <span class="browser-path" id="pathOrigen">—</span>
+            <button class="btn-reset" id="resetOrigen" type="button" title="Netejar selecció" disabled>✕</button>
             <label><input type="checkbox" id="recursiveCheck" /> Recursiu <span class="hint">Cerca dins de les subcarpetes.</span></label>
             <button class="btn-primary" id="scanBtn" type="button" disabled>Analitzar</button>
           </div>
@@ -77,6 +78,7 @@ const HOME = os.homedir()
           <div class="browser-tree" id="treeSortida"></div>
           <div class="browser-footer">
             <span class="browser-path" id="pathSortida">—</span>
+            <button class="btn-reset" id="resetSortida" type="button" title="Netejar selecció" disabled>✕</button>
             <label><input type="checkbox" id="overwriteCheck" /> Sobreescriure <span class="hint">Si no, afegeix sufix _001, _002...</span></label>
             <button class="btn-primary" id="convertBtn" type="button" disabled>Convertir</button>
           </div>

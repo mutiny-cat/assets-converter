@@ -145,9 +145,11 @@ function onRowClick(treeEl, ev, row, path, isDir, esSortida, children) {
   if (esSortida) {
     dirSortida = path
     pathSortida.textContent = path
+    $("resetSortida").disabled = false
   } else {
     dirOrigen = path
     pathOrigen.textContent = path
+    $("resetOrigen").disabled = false
     scanBtn.disabled = false
   }
   // Si és directori, també expandir
@@ -290,8 +292,28 @@ HOME = document.documentElement.dataset.home || "/Users"
 initTree(treeOrigen, false)
 initTree(treeSortida, true)
 
-// Botó tancar servidor (dalt a la dreta)
+// Botons de reset als navegadors
+$("resetOrigen").addEventListener("click", () => resetarSeleccio(false))
+$("resetSortida").addEventListener("click", () => resetarSeleccio(true))
+
+// Botó tancar servidor
 $("shutdownBtn").addEventListener("click", async () => {
   if (!confirm("Segur que vols aturar el servidor?")) return
   try { await fetch("/api/shutdown", { method: "POST" }) } catch {}
 })
+
+function resetarSeleccio(esSortida) {
+  const tree = esSortida ? treeSortida : treeOrigen
+  tree.querySelectorAll(".tr.sel").forEach((r) => r.classList.remove("sel"))
+  if (esSortida) {
+    dirSortida = ""
+    pathSortida.textContent = "—"
+    $("resetSortida").disabled = true
+  } else {
+    dirOrigen = ""
+    pathOrigen.textContent = "—"
+    $("resetOrigen").disabled = true
+    scanBtn.disabled = true
+  }
+  resetResults()
+}
