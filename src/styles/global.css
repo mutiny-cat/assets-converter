@@ -106,6 +106,7 @@ button{padding:.4rem .85rem;border:none;border-radius:var(--radius);cursor:point
 /* Botó tancar servidor (dalt a la dreta) */
 .btn-shutdown{position:absolute;top:1.5rem;right:2rem;padding:.4rem .85rem;border:1px solid var(--border);background:var(--bg2);color:var(--text2);font-size:.85rem;cursor:pointer;border-radius:var(--radius);transition:all .12s}
 .btn-shutdown:hover{border-color:var(--red);color:var(--red);background:var(--bg3)}
+.shutdown-icon{font-size:1.4rem;vertical-align:middle;margin-right:2px}
 
 /* Toast */
 /* Notificacions efímeres (toast) */
