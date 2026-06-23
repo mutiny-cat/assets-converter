@@ -14,10 +14,6 @@ Aquest projecte és una pràctica d'aprenentatge, no pretén ser una aplicació 
 - [Comportament de sobreescriptura](#comportament-de-sobreescriptura)
 - [Agraïments](#agraïments)
 
----
-
----
-
 ![Captura de pantalla d'Assets Converter](public/screenshot.png)
 
 ## Objectiu
@@ -97,7 +93,10 @@ Converteix fonts **TTF**, **OTF** i **WOFF** al format **WOFF2**, el format de f
 
 ## Comportament de sobreescriptura
 
-Si no se sobreescriu i l'arxiu de sortida ja existeix, s'afegeix un sufix `_001`, `_002`...
+El panell de sortida inclou un selector **Sobreescriure** que controla què passa si l'arxiu de sortida ja existeix:
+
+- **Activada:** reemplaça directament l'arxiu existent.
+- **Desactivada (per defecte):** afegeix un sufix `_001`, `_002`, etc. al nom de l'arxiu per no perdre versions anteriors.
 
 ## Agraïments
 
