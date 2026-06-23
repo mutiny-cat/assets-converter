@@ -14,8 +14,6 @@ Aquest projecte és una pràctica d'aprenentatge, no pretén ser una aplicació 
 - [Comportament de sobreescriptura](#comportament-de-sobreescriptura)
 - [Agraïments](#agraïments)
 
-![Captura de pantalla d'Assets Converter](public/screenshot.png)
-
 ## Objectiu
 
 Assets Converter és una eina local que optimitza els recursos d'un projecte web sense necessitat de pujar arxius a cap servidor extern. Selecciones una carpeta, tries el tipus de conversió i els arxius optimitzats es guarden al directori de sortida. Els originals no es modifiquen mai.
